@@ -4,8 +4,8 @@ const formData = require("form-data");
 const imageKit = async (req, res, next) => {
     try {
         if (!req.file) {
-            if (req.body.imgUrl = 'undefined') {
-                req.body.imgUrl = undefined
+            if (req.body.imageUrl_headline === 'undefined' && req.body.imageUrl_content === 'undefined') {
+                req.body.imageUrl = undefined
             }
             next()
         } else if (req.file.size <= 555000 && (req.file.mimetype === 'image/jpeg' || req.file.mimetype === 'image/png')) {
@@ -27,7 +27,8 @@ const imageKit = async (req, res, next) => {
 
 
             if (result) {
-                req.body.imgUrl = result.data.url
+                req.body.imageUrl_headline = result.data.url
+                req.body.imageUrl_content = result.data.url
                 next()
             } else {
                 next({
